@@ -6,8 +6,20 @@ const Home = () => {
     const [nuevaTarea, setNuevaTarea] = useState("")
 
     const agregarTarea = () =>{
-        setTareas([...tareas, nuevaTarea])
+
+        if (nuevaTarea.trim() === "") return;
+
+        const nueva = {
+            id: Date.now(),
+            title: nuevaTarea
+        }
+
+        setTareas([...tareas, nueva])
         setNuevaTarea("")
+    }
+
+    const eliminarTarea = () =>{
+
     }
 
     return(<div>
@@ -24,7 +36,7 @@ const Home = () => {
 
         <ul>
         {tareas.map((tarea, index) => (
-          <TaskItem key={index} tarea={tarea} />
+          <TaskItem key={tarea.id} tarea={tarea} />
         ))}
         </ul>
     </div>)
