@@ -18,8 +18,9 @@ const Home = () => {
         setNuevaTarea("")
     }
 
-    const eliminarTarea = () =>{
-
+    const eliminarTarea = (id) =>{
+        const tareasActualizadas = tareas.filter(tarea => tarea.id !== id)
+        setTareas(tareasActualizadas)
     }
 
     return(<div>
@@ -35,8 +36,8 @@ const Home = () => {
         </form>
 
         <ul>
-        {tareas.map((tarea, index) => (
-          <TaskItem key={tarea.id} tarea={tarea} />
+        {tareas.map((tarea) => (
+          <TaskItem key={tarea.id} tarea={tarea} eliminarTarea={eliminarTarea}/>
         ))}
         </ul>
     </div>)
