@@ -11,7 +11,8 @@ const Home = () => {
 
         const nueva = {
             id: Date.now(),
-            title: nuevaTarea
+            title: nuevaTarea,
+            completed: false
         }
 
         setTareas([...tareas, nueva])
@@ -21,6 +22,13 @@ const Home = () => {
     const eliminarTarea = (id) =>{
         const tareasActualizadas = tareas.filter(tarea => tarea.id !== id)
         setTareas(tareasActualizadas)
+    }
+
+    const completarTarea = (id) =>{
+        const tareaParaActualizar = tareas.map(tarea => 
+            tarea.id === id ? {...tarea, completed: !tarea.completed} : tarea)
+
+        setTareas(tareaParaActualizar)
     }
 
     return(<div>
@@ -37,7 +45,7 @@ const Home = () => {
 
         <ul>
         {tareas.map((tarea) => (
-          <TaskItem key={tarea.id} tarea={tarea} eliminarTarea={eliminarTarea}/>
+          <TaskItem key={tarea.id} tarea={tarea} eliminarTarea={eliminarTarea} completarTarea={completarTarea}/>
         ))}
         </ul>
     </div>)
