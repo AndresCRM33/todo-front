@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TaskItem from "../components/TaskItem";
+import { agregarTarea, obtenerTareas } from "../services/api";
 
 const Home = () => {
     const [tareas, setTareas] = useState([])
     const [nuevaTarea, setNuevaTarea] = useState("")
 
-    const agregarTarea = () =>{
-
-        if (nuevaTarea.trim() === "") return;
-
-        const nueva = {
-            id: Date.now(),
-            title: nuevaTarea,
-            completed: false
+    useEffect(() => {
+        const cargarTareas = async () => {
+            const tareasDesdeAPI = await obtenerTareas()
+            setTareas(tareasDesdeAPI)
         }
 
-        setTareas([...tareas, nueva])
+        cargarTareas()
+    })
+
+    // const agregarTarea = () =>{
+
+    //     if (nuevaTarea.trim() === "") return;
+
+    //     const nueva = {
+    //         id: Date.now(),
+    //         titulo: nuevaTarea,
+    //         completado: false
+    //     }
+
+    //     setTareas([...tareas, nueva])
+    //     setNuevaTarea("")
+    // }
+
+    const handleAgregarTarea = async () => {
+        if (nuevaTarea.trim === "") return;
+        const tareaCreada = await agregarTarea({titulo: nuevaTarea, completado: false})
+        setTareas([...tareas, tareaCreada])
         setNuevaTarea("")
     }
 
@@ -40,7 +57,7 @@ const Home = () => {
             onChange={(e) => setNuevaTarea(e.target.value)}
             />
             <button
-            onClick={agregarTarea}>Agregar</button>
+            onClick={handleAgregarTarea}>Agregar</button>
         </form>
 
         <ul>
