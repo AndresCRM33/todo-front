@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TaskItem from "../components/TaskItem";
-import { agregarTarea, obtenerTareas, eliminarTarea } from "../services/api";
+import { agregarTarea, obtenerTareas, eliminarTarea, completarTarea } from "../services/api";
 
 const Home = () => {
     const [tareas, setTareas] = useState([])
@@ -48,11 +48,27 @@ const Home = () => {
 
     }
 
-    const completarTarea = (id) =>{
-        const tareaParaActualizar = tareas.map(tarea => 
-            tarea.id === id ? {...tarea, completed: !tarea.completed} : tarea)
+    // const completarTarea = (id) =>{
+    //     const tareaParaActualizar = tareas.map(tarea => 
+    //         tarea.id === id ? {...tarea, completed: !tarea.completed} : tarea)
 
-        setTareas(tareaParaActualizar)
+    //     setTareas(tareaParaActualizar)
+    // }
+
+    const handleCompletarTarea = async (id) => {
+        if (!id) return;
+
+    try {
+        const tareaActualizada = await completarTarea(id);
+
+        setTareas((prevTareas) =>
+            prevTareas.map((tarea) =>
+                tarea._id === id ? tareaActualizada : tarea
+            )
+        );
+    } catch (error) {
+        console.error("Error al marcar la tarea como completada:", error);
+    }
     }
 
     return(<div>
@@ -69,7 +85,12 @@ const Home = () => {
 
         <ul>
         {tareas.map((tarea) => (
-          <TaskItem key={tarea._id} tarea={tarea} handleEliminarTarea={handleEliminarTarea} completarTarea={completarTarea}/>
+          <TaskItem 
+            key={tarea._id} 
+            tarea={tarea} 
+            handleEliminarTarea={handleEliminarTarea} 
+            handleCompletarTarea={handleCompletarTarea}    
+        />
         ))}
         </ul>
     </div>)

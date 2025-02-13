@@ -28,3 +28,12 @@ export const agregarTarea = async (nuevaTarea) => {
     }
 }
 
+export const completarTarea = async (id) => {
+    try {
+        const respuesta = await axios.put(`${API_URL}/tareas/${id}`)
+        return respuesta.data
+    } catch (error) {
+        console.error("Error al completar la tarea", error)
+    }
+}
+
