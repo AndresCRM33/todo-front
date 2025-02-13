@@ -1,9 +1,9 @@
 import React from "react";
 
-const TaskItem = ({tarea, eliminarTarea, completarTarea}) => {
+const TaskItem = ({tarea, handleEliminarTarea, completarTarea}) => {
     return(<li>
         <span>{tarea.titulo}</span>
-        <button onClick={() => eliminarTarea(tarea.id)}>X</button>
+        <button onClick={() => handleEliminarTarea(tarea._id)}>X</button>
         <button onClick={() => completarTarea(tarea.id)}>{tarea.completado ? "completado" : "incompleto"}</button>
     </li>)
 }

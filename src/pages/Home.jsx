@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TaskItem from "../components/TaskItem";
-import { agregarTarea, obtenerTareas } from "../services/api";
+import { agregarTarea, obtenerTareas, eliminarTarea } from "../services/api";
 
 const Home = () => {
     const [tareas, setTareas] = useState([])
@@ -36,9 +36,16 @@ const Home = () => {
         setNuevaTarea("")
     }
 
-    const eliminarTarea = (id) =>{
-        const tareasActualizadas = tareas.filter(tarea => tarea.id !== id)
-        setTareas(tareasActualizadas)
+    // const eliminarTarea = (id) =>{
+    //     const tareasActualizadas = tareas.filter(tarea => tarea.id !== id)
+    //     setTareas(tareasActualizadas)
+    // }
+
+    const handleEliminarTarea = async (id) => {
+        if(!id) return;
+
+        await eliminarTarea(id)
+
     }
 
     const completarTarea = (id) =>{
@@ -62,7 +69,7 @@ const Home = () => {
 
         <ul>
         {tareas.map((tarea) => (
-          <TaskItem key={tarea.id} tarea={tarea} eliminarTarea={eliminarTarea} completarTarea={completarTarea}/>
+          <TaskItem key={tarea.id} tarea={tarea} handleEliminarTarea={handleEliminarTarea} completarTarea={completarTarea}/>
         ))}
         </ul>
     </div>)
