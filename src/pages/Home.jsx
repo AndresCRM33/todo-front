@@ -69,7 +69,7 @@ const Home = () => {
 
         <ul>
         {tareas.map((tarea) => (
-          <TaskItem key={tarea.id} tarea={tarea} handleEliminarTarea={handleEliminarTarea} completarTarea={completarTarea}/>
+          <TaskItem key={tarea._id} tarea={tarea} handleEliminarTarea={handleEliminarTarea} completarTarea={completarTarea}/>
         ))}
         </ul>
     </div>)
